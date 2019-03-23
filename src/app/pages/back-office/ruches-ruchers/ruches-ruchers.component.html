@@ -1,3 +1,60 @@
-<p>
-  ruches-ruchers works!
-</p>
+<div fxLayout="row" fxLayoutAlign="start center">
+  <mat-icon>home</mat-icon>
+  <h3>Ruches & Ruchers</h3>
+</div>
+  
+<button *ngIf="!afficherFormulaireRucher && !creationEnCours" (click)="afficherFormulaireRucher = true" mat-stroked-button color="primary" class="mb-4">
+  Créer un rucher
+</button>
+
+<form *ngIf="afficherFormulaireRucher" [formGroup]="formulaireRucher" fxLayout="column">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Identifiant" formControlName="identifiant">
+    <mat-error>Veuillez saisir un identifiant</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Nombre de ruchers" formControlName="nombreRuches">
+    <mat-error>Veuillez saisir un nombre de ruches valide</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Descriptif</mat-label>
+    <mat-select  formControlName="descriptif">
+      <mat-option *ngFor="let environnement of environnements" [value]="environnement">
+        {{environnement}}
+      </mat-option>
+    </mat-select>
+    <mat-error>Veuillez saisir un descriptif</mat-error>
+  </mat-form-field>
+
+  <div *ngIf="rucherCourant">
+    <mat-form-field>
+      <input matInput type="number" placeholder="Fréquence personnalisée de visites" formControlName="frequenceVisite">
+      <mat-error>Veuillez saisir un nombre de fréquence de visite valide</mat-error>
+    </mat-form-field>
+
+    <button  (click)="setPositionRucher(rucherCourant)" mat-stroked-button color="primary" class="mb-4">
+      Mettre à jour position rucher
+    </button>
+  </div>
+
+  <button (click)="creerUnRucher()" type="submit" mat-stroked-button color="primary">
+    {{rucherCourant ? 'Modifier' : 'Créer'}}
+  </button>
+</form>
+
+<span *ngIf="creationEnCours">Création du rucher en cours...</span>
+
+
+<h4 *ngIf="ruchers.length != 0">Liste ruchers</h4>
+<div class="listeRuchers">
+  <div *ngFor="let rucher of ruchers; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
+    <span>{{rucher.identifiant}}</span>
+    
+    <div>
+      <mat-icon (click)="modifierRucher(rucher)" class="bouton">edit</mat-icon>
+      <mat-icon (click)="supprimerRucher(i)" class="bouton">close</mat-icon>
+    </div>
+  </div>
+</div>

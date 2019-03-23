@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './modules/shared.module';
+import { LocalStorageService } from './services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { SharedModule } from './modules/shared.module';
     AppRoutingModule,
     SharedModule
   ],
-  providers: [],
+  providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,14 @@
+:host{
+    width:80%;
+    display: flex;
+    flex-direction : column;
+    align-items: center;
+    height:100%;
+    overflow: scroll;
+}
+
+.listeRuchers{
+    max-width : 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,3 +1,40 @@
-<p>
-  configuration works!
-</p>
+<div fxLayout="row" fxLayoutAlign="start center">
+  <mat-icon>settings</mat-icon>
+  <h3>Configuration</h3>
+</div>
+
+<button (click)="sauvegarderDonnees()" mat-stroked-button color="primary" class="mb-4">
+  Sauvegarder données
+</button>
+
+<button (click)="importerInputFile.click()" mat-stroked-button color="primary" class="mb-12">
+  Importer données
+</button>
+<input hidden type="file" accept=".json,application/json" #importerInputFile (change)="fichierChoisis($event)"/>
+
+
+
+<mat-form-field>
+  <input [formControl]="frequenceGlobaleVisite" matInput type="number" min="0"
+    placeholder="Fréquence globale de visite des ruchers">
+</mat-form-field>
+
+
+<mat-form-field>
+  <input [formControl]="environnementType" matInput placeholder="Environnement type" type="text">
+</mat-form-field>
+<button *ngIf="environnementType.touched" (click)="creerEnvironnement(environnementType.value)" mat-stroked-button color="primary">
+  Créer environnement
+</button>
+
+
+<h4 *ngIf="environnements.length != 0">Liste environnements type</h4>
+<div class="listeEnvironnement">
+  <div *ngFor="let environnement of environnements; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
+    <span>{{environnement}}</span>
+    <mat-icon (click)="supprimerEnvironnement(i)" class="bouton">close</mat-icon>
+  </div>
+</div>
+
+
+

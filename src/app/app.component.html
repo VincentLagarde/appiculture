@@ -3,18 +3,37 @@
     <a routerLink="/front" routerLinkActive="active">Web App'iculture</a>
   </h3>
 
-  <button mat-icon-button [matMenuTriggerFor]="menuNavigation">
-    <mat-icon>menu</mat-icon>
-  </button>
+  <div>
+    <button mat-icon-button [matMenuTriggerFor]="menuFrontOffice">
+      <mat-icon>menu</mat-icon>
+    </button>
+  
+    <button mat-icon-button [matMenuTriggerFor]="menuBackOffice">
+      <mat-icon>settings_applications</mat-icon>
+    </button>
+  </div>
 </header>
 
 <!-- Menu contextuel de navigation -->
-<mat-menu #menuNavigation="matMenu">
-  <button  mat-menu-item routerLink="/back/configuration">
+<mat-menu #menuFrontOffice="matMenu">
+    <button routerLink="/front" mat-menu-item >
+      <mat-icon >settings</mat-icon>
+      <span>Configuration</span>
+    </button>
+    <button routerLink="/front" mat-menu-item>
+      <mat-icon>home</mat-icon>
+      <span>Ruches & Ruchers</span>
+    </button>
+  </mat-menu>
+  
+
+<!-- Menu contextuel de navigation -->
+<mat-menu #menuBackOffice="matMenu">
+  <button routerLink="/back/configuration" mat-menu-item >
     <mat-icon >settings</mat-icon>
     <span>Configuration</span>
   </button>
-  <button  mat-menu-item>
+  <button routerLink="/back/ruches-ruchers" mat-menu-item>
     <mat-icon>home</mat-icon>
     <span>Ruches & Ruchers</span>
   </button>

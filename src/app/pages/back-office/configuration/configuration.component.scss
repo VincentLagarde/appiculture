@@ -1,0 +1,27 @@
+:host{
+    width:80%;
+    display: flex;
+    flex-direction : column;
+    align-items: center;
+    height:100%;
+    overflow: scroll;
+}
+
+mat-form-field{
+    width : 100%;
+}
+
+.listeEnvironnement{
+    max-width : 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.mb-4{
+    margin-bottom: 4px;
+}   
+
+.mb-12{
+    margin-bottom: 12px;
+}   
