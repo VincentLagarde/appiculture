@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'liste-ruchers'},
   { path: 'liste-ruchers', component: ListeRuchersComponent},
   { path: 'carte-ruchers', component: CarteRuchersComponent},
-  { path: 'visite-rucher', component: VisiteRucherComponent},
+  { path: 'visite-rucher/:id', component: VisiteRucherComponent},
   { path : '**', redirectTo : 'liste-ruchers'}
 ];
 

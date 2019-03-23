@@ -10,8 +10,19 @@ export interface Rucher {
     identifiant : string,
     nombreRuches : number,
     descriptif : string,
-    position? : Position
+    position? : {
+        latitude : number,
+        longitude : number
+    }
     dateCreation : Date,
-    historiqueVisite : string[],
+    visites : Visite[],
     frequenceVisite : number
+}
+
+export interface Visite {
+    date : Date,
+    dynamiqueDeveloppement : string,
+    nourritureApportee? : string,
+    nombreHaussesRecoltes : number,
+    observationsPreparatifs : string
 }

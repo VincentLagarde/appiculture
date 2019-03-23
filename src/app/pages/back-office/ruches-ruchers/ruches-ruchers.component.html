@@ -3,7 +3,7 @@
   <h3>Ruches & Ruchers</h3>
 </div>
   
-<button *ngIf="!afficherFormulaireRucher && !creationEnCours" (click)="afficherFormulaireRucher = true" mat-stroked-button color="primary" class="mb-4">
+<button *ngIf="!afficherFormulaireRucher && !changementPositionEnCours" (click)="afficherFormulaireRucher = true" mat-stroked-button color="primary" class="mb-4">
   Créer un rucher
 </button>
 
@@ -28,33 +28,40 @@
     <mat-error>Veuillez saisir un descriptif</mat-error>
   </mat-form-field>
 
-  <div *ngIf="rucherCourant">
+  <div *ngIf="rucherCourant" fxLayout="column" class="mb-8">
     <mat-form-field>
-      <input matInput type="number" placeholder="Fréquence personnalisée de visites" formControlName="frequenceVisite">
+      <input matInput type="number" placeholder="Fréquence de visite" formControlName="frequenceVisite">
       <mat-error>Veuillez saisir un nombre de fréquence de visite valide</mat-error>
     </mat-form-field>
 
-    <button  (click)="setPositionRucher(rucherCourant)" mat-stroked-button color="primary" class="mb-4">
-      Mettre à jour position rucher
+    <div *ngIf="rucherCourant.position" fxLayout="column" class="position">
+      <span>Latitude : {{rucherCourant.position.latitude}}</span>
+      <span>Longitude : {{rucherCourant.position.longitude}}</span>
+    </div>
+
+    <button  (click)="setPositionRucher(rucherCourant)" [disabled]="changementPositionEnCours" mat-stroked-button color="primary">
+      {{changementPositionEnCours ? "Mise à jour en cours..." : "Mettre à jour la position"}} 
     </button>
   </div>
 
-  <button (click)="creerUnRucher()" type="submit" mat-stroked-button color="primary">
-    {{rucherCourant ? 'Modifier' : 'Créer'}}
-  </button>
+  <button *ngIf="!rucherCourant" (click)="creerUnRucher()" type="submit" mat-stroked-button color="primary">Créer</button>
+  <button *ngIf="rucherCourant" (click)="modifierUnRucher(rucherCourant, formulaireRucher.value)" [disabled]="changementPositionEnCours" type="submit" mat-stroked-button color="primary">Modifier</button>
+  
 </form>
 
-<span *ngIf="creationEnCours">Création du rucher en cours...</span>
+<span *ngIf="!rucherCourant && changementPositionEnCours">Création du rucher en cours...</span>
 
 
+<!-- Liste des ruchers -->
 <h4 *ngIf="ruchers.length != 0">Liste ruchers</h4>
 <div class="listeRuchers">
   <div *ngFor="let rucher of ruchers; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
     <span>{{rucher.identifiant}}</span>
-    
     <div>
-      <mat-icon (click)="modifierRucher(rucher)" class="bouton">edit</mat-icon>
-      <mat-icon (click)="supprimerRucher(i)" class="bouton">close</mat-icon>
+      <mat-icon (click)="afficherFormulaireModificationRucher(rucher)" class="bouton">edit</mat-icon>
+
+      <!-- on cache le bouton de suppression si l'utilisateur est en train de modifier ce rucher -->
+      <mat-icon *ngIf="rucher != rucherCourant" (click)="supprimerRucher(i)" class="bouton">close</mat-icon>
     </div>
   </div>
 </div>

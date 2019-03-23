@@ -15,7 +15,7 @@ export class RuchesRuchersComponent implements OnInit {
 
   formulaireRucher : FormGroup;
   afficherFormulaireRucher : boolean = false;
-  creationEnCours : boolean = false;
+  changementPositionEnCours : boolean = false;
 
   constructor(
     private formBuilder : FormBuilder,
@@ -57,15 +57,13 @@ export class RuchesRuchersComponent implements OnInit {
     //Si le formulaire est valide
     if(this.formulaireRucher.valid){
       this.afficherFormulaireRucher = false;//Cache le formulaire
-      this.creationEnCours = true;//Message d'attente (car la mise à jour de la position prend un certain temps)
 
       //Initialisation du rucher
       let rucher : Rucher = this.formulaireRucher.value;
       rucher.dateCreation = new Date();
-      rucher.historiqueVisite = [];
+      rucher.visites = [];
       rucher.frequenceVisite = null;
 
-      
       //On définit la position du rucher (si c'est possible)
       //Cette fonction prendra un certain à s'effectuer et bloque l'éxécution du code
       await this.setPositionRucher(rucher);
@@ -74,7 +72,6 @@ export class RuchesRuchersComponent implements OnInit {
       this.ruchers.push(rucher);
       this.localStorageService.setItem(LocalStorageKey.Ruchers, this.ruchers);
 
-      this.creationEnCours = false;
       this.initFormulaireRucher();
     }
   }
@@ -84,18 +81,34 @@ export class RuchesRuchersComponent implements OnInit {
     this.localStorageService.setItem(LocalStorageKey.Ruchers, this.ruchers);
   }
 
-  modifierRucher(rucher : Rucher){
+  afficherFormulaireModificationRucher(rucher : Rucher){
     this.rucherCourant = rucher;
-
     this.initFormulaireRucher(rucher);
     this.afficherFormulaireRucher = true;
   }
+  
+  /** Permet de modifier un rucher à partir des valeurs du formulaire */
+  modifierUnRucher(rucher : Rucher, rucherFormulaire : Rucher){
+    if(this.formulaireRucher.valid){
+      rucher.identifiant = rucherFormulaire.identifiant;
+      rucher.descriptif = rucherFormulaire.descriptif;
+      rucher.nombreRuches = rucherFormulaire.nombreRuches;
+      rucher.frequenceVisite = rucherFormulaire.frequenceVisite;
+  
+      this.localStorageService.setItem(LocalStorageKey.Ruchers, this.ruchers);
+     
+      this.initFormulaireRucher();
+      this.afficherFormulaireRucher = false;
+      this.rucherCourant = null;
+    }
+  }
 
   setPositionRucher(rucher : Rucher) : Promise<any> {
+    this.changementPositionEnCours = true;
     return new Promise(resolve =>{
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position=> {
-          rucher.position = position;
+          rucher.position = { latitude : position.coords.latitude, longitude : position.coords.longitude };
           resolve()
         }, () => {
           rucher.position = null;
@@ -104,6 +117,9 @@ export class RuchesRuchersComponent implements OnInit {
       }else{
         resolve()
       }
+    }).then(() => {
+      this.changementPositionEnCours = false;
+      return true;
     });
   }
 }

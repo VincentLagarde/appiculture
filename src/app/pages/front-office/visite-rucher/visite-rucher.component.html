@@ -1,3 +1,26 @@
-<p>
-  visite-rucher works!
-</p>
+<ng-container *ngIf="rucher">
+  <h2>{{rucher.identifiant}}</h2>
+  <p>Nombre de ruches : <b>{{rucher.nombreRuches}}</b></p>
+  <p>Environnement : <b>{{rucher.descriptif}}</b></p>
+  
+  <div *ngIf="rucher?.position" fxLayout="column">
+    <span>Latitude : {{rucher.position.latitude}}</span>
+    <span>Longitude : {{rucher.position.longitude}}</span>
+  </div>
+  
+  <p>Date création : {{rucher.dateCreation}}</p>
+  
+  
+  <p>Nombre de hausse récoltées depuis : {{rucher.dateCreation}}, {{getNombreHause()}}</p>
+  
+  
+  <button  (click)="afficherFormulaireVisite = true" mat-stroked-button color="primary" class="mb-4">
+    Créer une visite
+  </button>
+  
+  <h3 *ngIf="rucher?.visites.length != 0">Liste des visites</h3>
+  
+  <div *ngFor="let visite of rucher.visites">
+  
+  </div>
+</ng-container>

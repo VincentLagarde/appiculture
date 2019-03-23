@@ -31,6 +31,13 @@ html, body{
   width : 100%;
 }
 
+.mat-button-wrapper{
+  width : 100%;
+  display : flex;
+  font-size : 1.1rem;
+  // justify-content: space-around;
+  align-items: center;
+}
 
 
 //#region Import OFFLINE des googles fonts Montserrat + Roboto (situés dans assets/fonts) 
