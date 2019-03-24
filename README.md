@@ -1,8 +1,9 @@
 Application réalisé sous Angular 7.
 
-Binôme : 
-    - Vincent Lagarde
-    - Alexis Nadaud
+Binôme :
+
+  - Vincent Lagarde
+  - Alexis Nadaud
 
 
 Structure de l'application : 
