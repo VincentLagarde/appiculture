@@ -4,6 +4,7 @@ Application réalisée sous Angular 7.
   - Vincent Lagarde
   - Alexis Nadaud
 
+---
 
 **Structure de l'application** : 
 
@@ -38,6 +39,7 @@ AppModule :
     - CreerVisiteComponent ('/front/creer-visite/:id') : 
       - créer une visite
 
+---
 
 On utilise trois **services** dans l'application :
   - LocalStorageService :
