@@ -3,8 +3,8 @@
   <h3>Liste des ruchers</h3>
 </div>
 
-<button *ngFor="let rucher of ruchers" [routerLink]="['/front/visite-rucher', rucher.identifiant]" fxLayout="row" fxLayoutAlign="start center" mat-stroked-button color="primary" class="w-100 rucher bouton">
-  <div [style.backgroundColor]="getCouleurSelonRucher(rucher)" class="codeCouleur"></div>
+<button *ngFor="let rucher of rucherService.ruchers" [routerLink]="['/front/visite-rucher', rucher.identifiant]" fxLayout="row" fxLayoutAlign="start center" mat-stroked-button color="primary" class="w-100 rucher bouton">
+  <div [style.backgroundColor]="rucherService.getCouleurSelonRucher(rucher)" class="codeCouleur"></div>
   <span>{{rucher.identifiant}}</span>
 </button>
 

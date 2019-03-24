@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { JsonSaverService } from 'src/app/services/json-saver.service';
 import { LocalStorageService, LocalStorageKey } from '../../../services/local-storage.service';
+import { RucherService } from 'src/app/services/rucher.service';
 
 @Component({
   selector: 'app-configuration',
@@ -10,47 +11,42 @@ import { LocalStorageService, LocalStorageKey } from '../../../services/local-st
 })
 export class ConfigurationComponent implements OnInit {
 
-  environnements : string[] = [];
-
-  frequenceGlobaleVisite : FormControl = new FormControl(0, Validators.min(0));
+  frequenceGlobaleVisiteForm : FormControl = new FormControl(0, Validators.min(0));
   environnementType : FormControl = new FormControl();
 
   constructor(
     private jsonService : JsonSaverService,
-    private localStorageService : LocalStorageService
+    public rucherService : RucherService
   ) { }
 
   ngOnInit() {
-    this.initEnvironnementsEtFrequenceGlobale();
+    this.initFrequenceGlobale();
     
     //Ecoute les changement de valeur sur le champ de la fréquence globale de visite
-    this.frequenceGlobaleVisite.valueChanges.subscribe(nouvelleValeur =>{
-      if(this.frequenceGlobaleVisite.valid){
-        this.localStorageService.setItem(LocalStorageKey.FrequenceGlobaleVisite, nouvelleValeur);
+    this.frequenceGlobaleVisiteForm.valueChanges.subscribe(nouvelleValeur =>{
+      if(this.frequenceGlobaleVisiteForm.valid){
+        this.rucherService.frequenceGlobaleVisite = nouvelleValeur;
+        this.rucherService.sauvegarderFrequenceGlobaleVisite();
       }
     })
   }
 
-  initEnvironnementsEtFrequenceGlobale(){
-    let frequence = this.localStorageService.getItem(LocalStorageKey.FrequenceGlobaleVisite);
-    let environnements =  this.localStorageService.getItem(LocalStorageKey.Environnements);
-
-    this.frequenceGlobaleVisite.setValue(frequence ? frequence : '');
-    this.environnements = environnements ? environnements : [];
+  initFrequenceGlobale(){
+    this.frequenceGlobaleVisiteForm.setValue(this.rucherService.frequenceGlobaleVisite);
   }
 
   creerEnvironnement(environnement : string){
     if(environnement){
-      this.environnements.push(environnement);
-      this.environnementType.setValue('');
+      this.rucherService.environnements.push(environnement);
+      this.rucherService.sauvegarderEnvironnements();
 
-      this.localStorageService.setItem(LocalStorageKey.Environnements, this.environnements);
+      this.environnementType.setValue('');//Reinitilise le champs
     }
   }
 
   supprimerEnvironnement(index: number){
-    this.environnements.splice(index,1);
-    this.localStorageService.setItem(LocalStorageKey.Environnements, this.environnements);
+    this.rucherService.environnements.splice(index,1);
+    this.rucherService.sauvegarderEnvironnements();
   }
 
   sauvegarderDonnees(){
@@ -67,10 +63,11 @@ export class ConfigurationComponent implements OnInit {
       //On récupère le contenu json du fichier
       this.jsonService.getJsonAvecFile(fichier).then(json => {
         //On charge toutes les données du fichier json dans le localStorage
-        this.localStorageService.setAllAvecJson(json);
-
-        //On réinitialise les variables actuelles de la fréquence globale de visite et la liste d'environnements type
-        this.initEnvironnementsEtFrequenceGlobale();
+        //puis on charge les données du localStorage dans le service principal
+        this.rucherService.initLocalStorageEtDatasAvecJson(json);
+       
+        //On réinitialise le champs de fréquence globale de visite
+        this.initFrequenceGlobale();
       })
       
     }

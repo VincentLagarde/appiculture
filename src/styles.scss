@@ -27,16 +27,45 @@ html, body{
   margin-bottom: 4px;
 }
 
+.mb-12{
+  margin-bottom: 12px !important;
+}
+
 .w-100{
   width : 100%;
+}
+
+.mt-16{
+  margin-top : 16px;
 }
 
 .mat-button-wrapper{
   width : 100%;
   display : flex;
   font-size : 1.1rem;
-  // justify-content: space-around;
   align-items: center;
+}
+
+
+.leaflet-icon-red{
+  border-radius : 100%;
+  border: unset;
+  background-color : red !important;
+  box-shadow : 0px 2px 4px gray;
+}
+
+.leaflet-icon-orange{
+  border-radius : 100%;
+  border: unset;
+  background-color : orange !important;
+  box-shadow : 0px 2px 4px gray;
+}
+
+.leaflet-icon-lightgreen{
+  border-radius : 100%;
+  border: unset;
+  background-color : lightgreen !important;
+  box-shadow : 0px 2px 4px gray;
 }
 
 

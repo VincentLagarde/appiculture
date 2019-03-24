@@ -1,0 +1,15 @@
+<div *ngIf="_rucher" fxLayout="column" class="mb-8">
+  <mat-form-field>
+    <input matInput type="number" placeholder="Fréquence de visite" [formControl]="frequenceVisite">
+    <mat-error>Veuillez saisir un nombre de fréquence de visite valide</mat-error>
+  </mat-form-field>
+
+  <div *ngIf="_rucher.position" fxLayout="column" class="position">
+    <span>Latitude : {{_rucher.position.latitude}}</span>
+    <span>Longitude : {{_rucher.position.longitude}}</span>
+  </div>
+
+  <button  (click)="rucherService.setPositionRucher(_rucher)" [disabled]="rucherService.changementPositionEnCours" mat-stroked-button color="primary">
+    {{rucherService.changementPositionEnCours ? "Mise à jour en cours..." : "Mettre à jour la position"}} 
+  </button>
+</div>

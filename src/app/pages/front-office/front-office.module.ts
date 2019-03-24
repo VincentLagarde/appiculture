@@ -5,6 +5,8 @@ import { ListeRuchersComponent } from './liste-ruchers/liste-ruchers.component';
 import { VisiteRucherComponent } from './visite-rucher/visite-rucher.component';
 import { CarteRuchersComponent } from './carte-ruchers/carte-ruchers.component';
 import { SharedModule } from 'src/app/modules/shared.module';
+import { CreerVisiteComponent } from './creer-visite/creer-visite.component';
+import { DetailsVisiteComponent } from './details-visite/details-visite.component';
 
 
 const routes: Routes = [
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'liste-ruchers', component: ListeRuchersComponent},
   { path: 'carte-ruchers', component: CarteRuchersComponent},
   { path: 'visite-rucher/:id', component: VisiteRucherComponent},
+  { path: 'details-visite/:id/:date', component: DetailsVisiteComponent},
+  { path: 'creer-visite/:id', component: CreerVisiteComponent},
   { path : '**', redirectTo : 'liste-ruchers'}
 ];
 
@@ -19,7 +23,9 @@ const routes: Routes = [
   declarations: [
     ListeRuchersComponent,
     CarteRuchersComponent,
-    VisiteRucherComponent
+    VisiteRucherComponent,
+    CreerVisiteComponent,
+    DetailsVisiteComponent
   ],
   imports: [
     CommonModule,

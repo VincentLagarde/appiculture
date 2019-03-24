@@ -17,18 +17,12 @@ export class LocalStorageService {
     localStorage.setItem(key, jsonString);
   }
 
-
+  /** Efface tout le contenu du localStorage, et sauvegarde chaque propriétés de l'objet dans le localStorage */
   setAllAvecJson(json : any){
-    console.log("json",json)
     localStorage.clear();
     for(let propriete in json){
-     
-      console.log("propriete",propriete)
-    
       localStorage.setItem(propriete, json[propriete]);
-      //this.setItem(propriete, json[propriete]);
     }
-    console.log("localStorage", localStorage)
   }
 }
 

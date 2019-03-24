@@ -1,0 +1,29 @@
+<h4>Création d'une visite pour {{rucher.identifiant}}</h4>
+
+<form [formGroup]="formulaireCreationVisite" fxLayout="column">
+  <mat-form-field>
+    <input formControlName="date" matInput [matDatepicker]="dateVisite" >
+    <mat-datepicker-toggle matSuffix [for]="dateVisite"></mat-datepicker-toggle>
+    <mat-datepicker #dateVisite></mat-datepicker>
+  </mat-form-field> 
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Dynamique développement" formControlName="dynamiqueDeveloppement">
+    <mat-error>Veuillez saisir une dynamique de développement</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nourriture apportée" formControlName="nourritureApportee">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Nombre de hausses récoltées" formControlName="nombreHaussesRecoltes">
+    <mat-error>Veuillez saisir un noombre de hausse valide</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Observations générales et préparatifs" formControlName="observationsPreparatifs"></textarea>
+  </mat-form-field>
+    
+  <button (click)="creerUneVisite()" type="submit" mat-stroked-button color="primary">Créer la visite</button>
+</form>

@@ -15,7 +15,7 @@
 
 
 <mat-form-field>
-  <input [formControl]="frequenceGlobaleVisite" matInput type="number" min="0"
+  <input [formControl]="frequenceGlobaleVisiteForm" matInput type="number" min="0"
     placeholder="Fréquence globale de visite des ruchers">
 </mat-form-field>
 
@@ -28,9 +28,9 @@
 </button>
 
 
-<h4 *ngIf="environnements.length != 0">Liste environnements type</h4>
+<h4 *ngIf="rucherService.environnements.length != 0">Liste environnements type</h4>
 <div class="listeEnvironnement">
-  <div *ngFor="let environnement of environnements; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
+  <div *ngFor="let environnement of rucherService.environnements; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
     <span>{{environnement}}</span>
     <mat-icon (click)="supprimerEnvironnement(i)" class="bouton">close</mat-icon>
   </div>

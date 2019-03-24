@@ -1,0 +1,12 @@
+<h4>Visite du {{visite.date | date: 'dd/MM/yyyy'}}</h4>
+
+<span>Dynamique développement : <b>{{visite.dynamiqueDeveloppement ? visite.dynamiqueDeveloppement : 'Non renseigné'}}</b></span>
+
+<span>Nourriture apportée : <b>{{visite.nourritureApportee ? visite.nourritureApportee : 'Non renseignée'}}</b> </span>
+
+<span>Nombre de hausses récoltées : <b>{{visite.nombreHaussesRecoltes}}</b></span>
+
+<p *ngIf="visite.observationsPreparatifs">Observations générale et préparatifs pour la prochaine visite : {{visite.observationsPreparatifs}}</p>
+
+<button (click)="back()" mat-stroked-button color="primary">Retour</button>
+    

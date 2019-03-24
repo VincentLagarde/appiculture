@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageService, LocalStorageKey } from 'src/app/services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Rucher } from 'src/app/models/dataAppiculture.model';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { RucherService } from 'src/app/services/rucher.service';
 
 @Component({
   selector: 'app-visite-rucher',
@@ -12,45 +13,27 @@ import { FormGroup } from '@angular/forms';
 export class VisiteRucherComponent implements OnInit {
 
   rucher : Rucher;
-
-  afficherFormulaireVisite : boolean = false;
-
-  formulaireVisite : FormGroup;
+  selectionDateHausse : FormControl = new FormControl();
 
   constructor(
-    private localStorageService : LocalStorageService,
-    private route : ActivatedRoute,
-    private router : Router
+    public rucherService : RucherService,
+    private route : ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.initRucher();
+    this.rucher = this.rucherService.getRucherAvecIdentifiant(this.route.snapshot.params['id']);
+    this.selectionDateHausse.setValue(this.rucher.dateCreation);
   }
 
-  initRucher(){
-    let ruchers : Rucher[] = this.localStorageService.getItem(LocalStorageKey.Ruchers);
-    let identifiant = this.route.snapshot.params['id'];
-
-    if(ruchers){
-      let rucherExistant = ruchers.find(rucher => rucher.identifiant == identifiant);
-
-      if(rucherExistant){
-        this.rucher = rucherExistant;
-        console.log(this.rucher)
-      }else{
-        this.router.navigate(['/front/liste-ruchers']);
-      }
-    }else{
-      this.router.navigate(['/front/liste-ruchers']);
-    }
-    
-  
-    
-    
-  }
 
   getNombreHause(){
-
+    let nombreHausse = 0;
+    this.rucher.visites.forEach(visite =>{
+      if(new Date(visite.date) >= new Date(this.selectionDateHausse.value)){
+        nombreHausse += visite.nombreHaussesRecoltes;
+      }
+    })
+    return nombreHausse;
   }
 
 }

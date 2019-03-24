@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Rucher } from 'src/app/models/dataAppiculture.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LocalStorageService, LocalStorageKey } from 'src/app/services/local-storage.service';
+import { RucherService } from 'src/app/services/rucher.service';
 
 @Component({
   selector: 'app-ruches-ruchers',
@@ -10,44 +10,32 @@ import { LocalStorageService, LocalStorageKey } from 'src/app/services/local-sto
 })
 export class RuchesRuchersComponent implements OnInit {
   rucherCourant : Rucher;
-  ruchers : Rucher[] = [];
-  environnements : string[] = [];
-
+ 
   formulaireRucher : FormGroup;
   afficherFormulaireRucher : boolean = false;
-  changementPositionEnCours : boolean = false;
 
   constructor(
     private formBuilder : FormBuilder,
-    private localStorageService : LocalStorageService
+    public rucherService : RucherService
   ) { }
 
   ngOnInit() {
-    this.initRuchersEtEnvironnements();
-
     this.initFormulaireRucher();
   }
 
-  initRuchersEtEnvironnements(){
-    let ruchers = this.localStorageService.getItem(LocalStorageKey.Ruchers);
-    let environnements = this.localStorageService.getItem(LocalStorageKey.Environnements);
-    this.environnements = environnements ? environnements : [];
-    this.ruchers = ruchers ? ruchers : [];
-  }
-
+  /** Permet d'initialiser le formulaire de création ou modification d'un rucher selon si est un rucher est fourni en paramètres */
   initFormulaireRucher(rucher? : Rucher){
     if(rucher){
       this.formulaireRucher = this.formBuilder.group({
         identifiant : [rucher.identifiant, [Validators.required, Validators.maxLength(256)]],
         nombreRuches : [rucher.nombreRuches, [Validators.required, Validators.min(0)]],
         descriptif : [rucher.descriptif, Validators.required],
-        frequenceVisite : rucher.frequenceVisite
       }); 
     }else{
       this.formulaireRucher = this.formBuilder.group({
         identifiant : ['', [Validators.required, Validators.maxLength(256)]],
         nombreRuches : [1, [Validators.required, Validators.min(0)]],
-        descriptif : [this.environnements.length != 0 ? this.environnements[0] : '' , Validators.required]
+        descriptif : [this.rucherService.environnements.length != 0 ? this.rucherService.environnements[0] : '' , Validators.required]
       }); 
     }
   }
@@ -66,19 +54,19 @@ export class RuchesRuchersComponent implements OnInit {
 
       //On définit la position du rucher (si c'est possible)
       //Cette fonction prendra un certain à s'effectuer et bloque l'éxécution du code
-      await this.setPositionRucher(rucher);
+      await this.rucherService.setPositionRucher(rucher);
 
       //On ajoute le rucher à la liste
-      this.ruchers.push(rucher);
-      this.localStorageService.setItem(LocalStorageKey.Ruchers, this.ruchers);
+      this.rucherService.ruchers.push(rucher);
+      this.rucherService.sauvegarderRuchers();
 
       this.initFormulaireRucher();
     }
   }
 
   supprimerRucher(index : number){
-    this.ruchers.splice(index,1);
-    this.localStorageService.setItem(LocalStorageKey.Ruchers, this.ruchers);
+    this.rucherService.ruchers.splice(index,1);
+    this.rucherService.sauvegarderRuchers();
   }
 
   afficherFormulaireModificationRucher(rucher : Rucher){
@@ -93,33 +81,12 @@ export class RuchesRuchersComponent implements OnInit {
       rucher.identifiant = rucherFormulaire.identifiant;
       rucher.descriptif = rucherFormulaire.descriptif;
       rucher.nombreRuches = rucherFormulaire.nombreRuches;
-      rucher.frequenceVisite = rucherFormulaire.frequenceVisite;
   
-      this.localStorageService.setItem(LocalStorageKey.Ruchers, this.ruchers);
+      this.rucherService.sauvegarderRuchers();
      
+      this.rucherCourant = null;
       this.initFormulaireRucher();
       this.afficherFormulaireRucher = false;
-      this.rucherCourant = null;
     }
-  }
-
-  setPositionRucher(rucher : Rucher) : Promise<any> {
-    this.changementPositionEnCours = true;
-    return new Promise(resolve =>{
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(position=> {
-          rucher.position = { latitude : position.coords.latitude, longitude : position.coords.longitude };
-          resolve()
-        }, () => {
-          rucher.position = null;
-          resolve()
-        });
-      }else{
-        resolve()
-      }
-    }).then(() => {
-      this.changementPositionEnCours = false;
-      return true;
-    });
   }
 }

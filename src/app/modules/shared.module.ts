@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { ComponentsModule } from '../components/components.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [],
@@ -13,7 +14,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     ReactiveFormsModule,
     ComponentsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatMomentDateModule
   ],
   exports : [
     CommonModule,
@@ -21,7 +23,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     ReactiveFormsModule,
     ComponentsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatMomentDateModule
   ]
 })
 export class SharedModule { }

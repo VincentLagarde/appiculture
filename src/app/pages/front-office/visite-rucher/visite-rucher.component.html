@@ -1,26 +1,32 @@
 <ng-container *ngIf="rucher">
-  <h2>{{rucher.identifiant}}</h2>
-  <p>Nombre de ruches : <b>{{rucher.nombreRuches}}</b></p>
-  <p>Environnement : <b>{{rucher.descriptif}}</b></p>
+  <h3>{{rucher.identifiant}}</h3>
+  <span>Nombre de ruches : <b>{{rucher.nombreRuches}}</b></span>
+  <span>Environnement : <b>{{rucher.descriptif}}</b></span>
+  <span>Date de création : <b>{{rucher.dateCreation | date: 'dd/MM/yyyy'}}</b></span>
   
-  <div *ngIf="rucher?.position" fxLayout="column">
-    <span>Latitude : {{rucher.position.latitude}}</span>
-    <span>Longitude : {{rucher.position.longitude}}</span>
-  </div>
+  <!-- Component permettant de modifier fréquence visite/mise à jour position du rucher -->
+  <app-frequence-position-rucher [rucher]="rucher" class="mb-12"></app-frequence-position-rucher>
   
-  <p>Date création : {{rucher.dateCreation}}</p>
-  
-  
-  <p>Nombre de hausse récoltées depuis : {{rucher.dateCreation}}, {{getNombreHause()}}</p>
-  
-  
-  <button  (click)="afficherFormulaireVisite = true" mat-stroked-button color="primary" class="mb-4">
+  <span class="text-align-center mb-12">Nombre de hausse récoltées depuis
+    <mat-form-field floatLabel="never" class="selectionDateHausse">
+      <input [formControl]="selectionDateHausse" matInput [matDatepicker]="datePickerHausse" >
+      <mat-datepicker-toggle matSuffix [for]="datePickerHausse"></mat-datepicker-toggle>
+      <mat-datepicker #datePickerHausse></mat-datepicker>
+    </mat-form-field> 
+    : {{getNombreHause()}}
+  </span>
+
+
+  <button [routerLink]="['/front/creer-visite', rucher.identifiant]" mat-stroked-button color="primary" class="mb-4">
     Créer une visite
   </button>
   
   <h3 *ngIf="rucher?.visites.length != 0">Liste des visites</h3>
   
-  <div *ngFor="let visite of rucher.visites">
-  
-  </div>
+  <button *ngFor="let visite of rucher.visites"  [routerLink]="['/front/details-visite', rucher?.identifiant, visite.date]" mat-stroked-button color="primary" class="mb-4">
+    {{visite.date | date: 'dd/MM/yyyy'}}
+  </button>
+
+
+  <button  [routerLink]="['/front/visite-ruchers']" mat-stroked-button color="primary" class="mt-16">Retour</button>
 </ng-container>
