@@ -39,15 +39,15 @@ AppModule :
       - créer une visite
 
 
-On utilise trois services dans l'application : 
-    - LocalStorageService : 
-      - récupère et initialise des données dans le localStorage
-    - RucherService : 
-      - utilise LocalStorageService
-      - manipule l'ensemble des données de l'application
-    - JsonSaverService : 
-      - exporte des données dans un fichier json
-      - récupère un objet au format json à partir d'un fichier
+On utilise trois services dans l'application :
+  - LocalStorageService :
+    - récupère et initialise des données dans le localStorage
+  - RucherService :
+    - utilise LocalStorageService
+    - manipule l'ensemble des données de l'application
+  - JsonSaverService : 
+    - exporte des données dans un fichier json
+    - récupère un objet au format json à partir d'un fichier
 
  
 Dans src/app/models/dataAppiculture.model.ts se trouve la structure des données utilisée dans l'application.
