@@ -1,7 +1,6 @@
 Application réalisé sous Angular 7.
 
 Binôme :
-
   - Vincent Lagarde
   - Alexis Nadaud
 
@@ -9,15 +8,14 @@ Binôme :
 Structure de l'application : 
 
 AppModule : 
-    -BackOfficeModule ('/back') : 
-        - ConfigurationComponent ('/back/configuration') :
-            - configurer les environnements types, 
-            - configurer fréquence visite globale, 
-            - sauvegarder/exporter données de l'application format json
-        - RuchesRuchersComponent ('/back/ruches-ruchers') : 
-            - créer/modifier/supprimer un rucher
-
-    -FrontOfficeModule ('/front') : 
+  -BackOfficeModule ('/back') : 
+    - ConfigurationComponent ('/back/configuration') :
+      - configurer les environnements types, 
+      - configurer fréquence visite globale, 
+      - sauvegarder/exporter données de l'application format json
+    - RuchesRuchersComponent ('/back/ruches-ruchers') : 
+      - créer/modifier/supprimer un rucher
+  -FrontOfficeModule ('/front') : 
         - ListeRuchersComponent ('/front/liste-ruchers') : 
             - liste les ruchers avec indicateur couleur
             - sélection d'un rucher redirige sur VisiteRucherComponent
