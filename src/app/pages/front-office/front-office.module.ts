@@ -10,7 +10,7 @@ import { DetailsVisiteComponent } from './details-visite/details-visite.componen
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'liste-ruchers'},
+  { path: '', redirectTo: 'liste-ruchers', pathMatch : 'full'},
   { path: 'liste-ruchers', component: ListeRuchersComponent},
   { path: 'carte-ruchers', component: CarteRuchersComponent},
   { path: 'visite-rucher/:id', component: VisiteRucherComponent},
