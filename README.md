@@ -1,11 +1,11 @@
 Application réalisée sous Angular 7.
 
-Binôme :
+**Binôme** :
   - Vincent Lagarde
   - Alexis Nadaud
 
 
-Structure de l'application : 
+**Structure de l'application** : 
 
 AppModule :
   - BackOfficeModule ('/back') :
@@ -39,7 +39,7 @@ AppModule :
       - créer une visite
 
 
-On utilise trois services dans l'application :
+On utilise trois **services** dans l'application :
   - LocalStorageService :
     - récupère et initialise des données dans le localStorage
   - RucherService :
