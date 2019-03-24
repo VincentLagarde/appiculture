@@ -52,4 +52,4 @@ On utilise trois **services** dans l'application :
     - récupère un objet au format json à partir d'un fichier
 
  
-Dans src/app/models/dataAppiculture.model.ts se trouve la structure des données utilisée dans l'application.
+Dans src/app/models/dataAppiculture.model.ts se trouve les structures des données utilisées dans l'application.
