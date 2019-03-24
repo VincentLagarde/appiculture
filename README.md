@@ -7,8 +7,8 @@ Binôme :
 
 Structure de l'application : 
 
-AppModule : 
-  -BackOfficeModule ('/back') : 
+AppModule :
+  - BackOfficeModule ('/back') :
     - ConfigurationComponent ('/back/configuration') :
       - configurer les environnements types, 
       - configurer fréquence visite globale, 
