@@ -1,10 +1,3 @@
-export interface DataAppiculture {
-    configuration : {
-        environnements : string[],
-        frequenceGlobaleVisite : number
-    },
-    ruchers : Rucher[]
-}
 
 export interface Rucher {
     identifiant : string,
