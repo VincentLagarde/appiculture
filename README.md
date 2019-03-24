@@ -1,4 +1,4 @@
-Application réalisé sous Angular 7.
+Application réalisée sous Angular 7.
 
 Binôme :
   - Vincent Lagarde
